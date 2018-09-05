@@ -61,5 +61,4 @@ typings/
 .next
 test
 
-examples/document-viewer
-examples/nanowire-extensions
+repo
