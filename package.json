@@ -1,0 +1,11 @@
+{
+  "name": "@atecake/builder",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:WhoAteDaCake/builder.git",
+  "author": "whoatedacake <doitsimplefy@gmail.com>",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
+}
