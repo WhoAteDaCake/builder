@@ -8,6 +8,7 @@ const postcss = require('rollup-plugin-postcss');
 const { getFiles } = require('./utils');
 
 module.exports = builder => initial => {
+  const pkg = require(path.join(initial.home, 'package.json'));
   const options = builder.deepMerge(
     {
       files: {
@@ -15,6 +16,9 @@ module.exports = builder => initial => {
         output: 'es5',
         extensions: /\.(js|jsx|css|less|sass)$/,
         exclude: [],
+      },
+      build: {
+        external: [...Object.keys(pkg.peerDependencies), ...Object.key(pkg.dependencies)],
       },
     },
     initial
