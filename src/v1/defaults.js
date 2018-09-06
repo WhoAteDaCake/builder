@@ -43,8 +43,8 @@ const build = {
   json: {
     include: 'node_modules/**',
   },
-  external: id => !id.startsWith('\0') && !id.startsWith('.') && !id.startsWith('/'),
   rollup: {
+    external: id => !id.startsWith('\0') && !id.startsWith('.') && !id.startsWith('/'),
     onwarn(message) {
       // Suppress this error message... there are hundreds of them. Angular team says to ignore it.
       // https://github.com/rollup/rollup/wiki/Troubleshooting#this-is-undefined
