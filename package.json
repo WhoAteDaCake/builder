@@ -9,7 +9,8 @@
     "access": "public"
   },
   "scripts": {
-    "examples:all": "cd ./examples && bash run.bash"
+    "examples:all": "cd ./examples && bash run.bash",
+    "examples:custom": "cd ./examples && bash custom.bash"
   },
   "dependencies": {
     "@babel/core": "^7.0.0",
