@@ -12,6 +12,8 @@ const pipeline = require('../src/v2');
 
 pipeline.run([
   pipeline.configure(),
-  // pipeline
+  pipeline.customise(options => {
+    test: true;
+  }, false),
   console.log,
 ]);

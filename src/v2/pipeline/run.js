@@ -1,5 +1,5 @@
-function run(scripts) {
-  return scripts.reduce((value, fn) => fn(value), {});
+function run(scripts, initial = {}) {
+  return scripts.reduce((value, fn) => fn(value), initial);
 }
 
 module.exports = run;
