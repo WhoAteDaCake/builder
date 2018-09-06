@@ -8,12 +8,6 @@
     ], 3);
   ]);
 */
-const pipeline = require('../src/v2');
+const { run, configure, customise, when, tap } = require('../src/v2');
 
-pipeline.run([
-  pipeline.configure(),
-  pipeline.customise(options => {
-    test: true;
-  }, false),
-  console.log,
-]);
+run([configure(), when('build', [n => ({ test: true })]), tap(console.log)]);
