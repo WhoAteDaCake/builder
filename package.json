@@ -10,7 +10,7 @@
   },
   "scripts": {
     "examples:all": "cd ./examples && bash run.bash",
-    "examples:custom": "cd ./examples && bash custom.bash"
+    "examples:select": "cd ./examples && bash custom.bash"
   },
   "dependencies": {
     "@babel/core": "^7.0.0",

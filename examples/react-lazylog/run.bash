@@ -7,4 +7,4 @@ cd ./repo && git checkout build
 cp ../.builder.js . || true
 yarn install
 ../../../bin/builder.js bundle
-# ../../../bin/builder.js library
+../../../bin/builder.js library
