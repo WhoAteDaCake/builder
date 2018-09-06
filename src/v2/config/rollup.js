@@ -12,6 +12,13 @@ function onwarn(message) {
 }
 
 module.exports = {
-  external,
-  onwarn,
+  format: 'cjs',
+  babel: require('./babel'),
+  resolve: require('./resolve'),
+  commonjs: require('./commonjs'),
+  json: require('./json.js'),
+  extra: {
+    external,
+    onwarn,
+  },
 };
