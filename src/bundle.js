@@ -4,6 +4,7 @@ const babel = require('rollup-plugin-babel');
 const resolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
 const postcss = require('rollup-plugin-postcss');
+const json = require('rollup-plugin-json');
 
 const { getFiles } = require('./utils');
 
@@ -29,12 +30,13 @@ module.exports = builder => initial => {
     resolve(build.resolve),
     commonjs(build.commonjs),
     babel(build.babel),
+    json(build.json),
   ];
   return rollup({
     input: files.input,
-    output: files.output,
     plugins: plugins(),
     external: build.external,
+    ...build.rollup,
   })
     .then(bundle => bundle.generate(output).then(() => bundle))
     .then(bundle => bundle.write(output))

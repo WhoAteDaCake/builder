@@ -4,9 +4,11 @@ const babel = require('rollup-plugin-babel');
 const resolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
 const postcss = require('rollup-plugin-postcss');
+const json = require('rollup-plugin-json');
 
 const { getFiles } = require('./utils');
 
+// NEED TO BREAK FILES INTO CHUNKS to prevent memory overflow
 module.exports = builder => initial => {
   const pkg = require(path.join(initial.home, 'package.json'));
   const options = builder.deepMerge(
@@ -18,7 +20,7 @@ module.exports = builder => initial => {
         exclude: [],
       },
       build: {
-        external: [...Object.keys(pkg.peerDependencies), ...Object.key(pkg.dependencies)],
+        external: [...Object.keys(pkg.peerDependencies), ...Object.keys(pkg.dependencies)],
       },
     },
     initial
@@ -33,6 +35,7 @@ module.exports = builder => initial => {
     resolve(build.resolve),
     commonjs(build.commonjs),
     babel(build.babel),
+    json(build.json),
   ];
   const commands = fileNames.map(name => {
     const outputFile = prefix ? name.replace(prefix, '') : name;

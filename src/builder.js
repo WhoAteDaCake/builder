@@ -52,12 +52,12 @@ module.exports = (argv, home) => {
         // We expect side effects here, so
         const resp = controller(builder, options);
         if (typeof resp === 'object') {
-          options = deepMerge(controller);
+          options = builder.deepMerge(controller);
         }
         break;
       }
       case 'object': {
-        options = deepMerge(controller);
+        options = builder.deepMerge(controller);
       }
     }
   }
