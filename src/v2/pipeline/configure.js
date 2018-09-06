@@ -5,3 +5,5 @@ function configure(options = {}) {
   // Because this should be as first option passed we don't care about input from pipeline
   return () => R.mergeDeepRight(baseConfig, options);
 }
+
+module.exports = configure;
