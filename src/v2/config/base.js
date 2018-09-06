@@ -6,4 +6,5 @@ module.exports = {
   commonjs: require('./commonjs'),
   json: require('./json.js'),
   rollup: require('./rollup'),
+  files: require('./files'),
 };

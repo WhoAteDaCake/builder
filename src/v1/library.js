@@ -8,7 +8,6 @@ const json = require('rollup-plugin-json');
 
 const { getFiles } = require('./utils');
 
-// NEED TO BREAK FILES INTO CHUNKS to prevent memory overflow
 module.exports = builder => initial => {
   const pkg = require(path.join(initial.home, 'package.json'));
   const options = builder.deepMerge(
