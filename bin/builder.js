@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-require('../src/builder')(process.argv, process.cwd());
+require('../src/v1/builder')(process.argv, process.cwd());
