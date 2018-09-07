@@ -10,8 +10,8 @@ function onwarn(message) {
   if (message.code === 'THIS_IS_UNDEFINED') {
     return;
   }
-  debug('%O', message);
-  debug(message.toString());
+  // debug('%O', message);
+  debug(message.message);
 }
 
 module.exports = {
@@ -23,5 +23,6 @@ module.exports = {
   extra: {
     external,
     onwarn,
+    treeshake: true,
   },
 };
