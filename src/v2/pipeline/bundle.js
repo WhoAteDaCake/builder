@@ -14,11 +14,14 @@ function bundle() {
     const output = { file: files.output, format: rollup.format };
 
     function runAsync() {
-      return runRollup({
-        ...rollup.extra,
-        input: files.input,
-        plugins: plugins(rollup),
-      }).catch(e => debug(e));
+      return runRollup(
+        {
+          ...rollup.extra,
+          input: files.input,
+          plugins: plugins(rollup),
+        },
+        output
+      ).catch(e => debug(e));
     }
     return R.merge(config, { action: action.then(runAsync) });
   };

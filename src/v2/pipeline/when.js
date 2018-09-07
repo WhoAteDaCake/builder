@@ -1,4 +1,4 @@
-const run = require('./run');
+const { run } = require('./run');
 
 const nthArgument = n => process.argv[n];
 

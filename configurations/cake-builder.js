@@ -8,6 +8,6 @@
     ], 3);
   ]);
 */
-const { run, configure, customise, when, tap } = require('../src/v2');
+const { start, configure, customise, when, tap } = require('../src/v2');
 
-run([configure(), when('build', [n => ({ test: true })]), tap(console.log)]);
+start([configure(), when('build', [n => ({ test: true })]), tap(console.log)]);

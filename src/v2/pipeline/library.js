@@ -1,4 +1,5 @@
 const R = require('ramda');
+const path = require('path');
 const { runRollup } = require('../helpers/rollup');
 const plugins = require('../helpers/plugins');
 const debug = require('../helpers/debug')('pipeline:library');
@@ -17,11 +18,14 @@ function library() {
       const outputFile = prefix ? name.replace(prefix, '') : name;
       const outputFilePath = path.join(files.output, outputFile);
       const output = { file: outputFilePath, format: rollup.format };
-      return runRollup({
-        ...rollup.extra,
-        input: name,
-        plugins: plugins(rollup),
-      }).catch(e => debug(e));
+      return runRollup(
+        {
+          ...rollup.extra,
+          input: name,
+          plugins: plugins(rollup),
+        },
+        output
+      ).catch(e => debug(e));
     }
 
     function runAsync() {

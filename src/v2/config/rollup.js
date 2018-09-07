@@ -1,3 +1,5 @@
+const debug = require('../helpers/debug')('rollup');
+
 function external(id) {
   return !id.startsWith('\0') && !id.startsWith('.') && !id.startsWith('/');
 }
@@ -8,7 +10,8 @@ function onwarn(message) {
   if (message.code === 'THIS_IS_UNDEFINED') {
     return;
   }
-  console.log(message);
+  debug('%O', message);
+  debug(message.toString());
 }
 
 module.exports = {
