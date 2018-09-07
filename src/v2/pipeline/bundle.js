@@ -1,5 +1,5 @@
 const R = require('ramda');
-const { rollup: rollupFn } = require('rollup');
+const { runRollup } = require('../helpers/rollup');
 const plugins = require('../helpers/plugins');
 const debug = require('../helpers/debug')('pipeline:bundle');
 
@@ -14,14 +14,11 @@ function bundle() {
     const output = { file: files.output, format: rollup.format };
 
     function runAsync() {
-      return rollupFn({
+      return runRollup({
         ...rollup.extra,
         input: files.input,
         plugins: plugins(rollup),
-      })
-        .then(bundle => bundle.generate(output).then(() => bundle))
-        .then(bundle => bundle.write(output))
-        .catch(e => debug(e));
+      }).catch(e => debug(e));
     }
     return R.merge(config, { action: action.then(runAsync) });
   };
