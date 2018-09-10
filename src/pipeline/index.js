@@ -6,5 +6,17 @@ const tap = require('./tap');
 const bundle = require('./bundle');
 const library = require('./library');
 const proceed = require('./proceed');
+const devServer = require('./devServer');
 
-module.exports = { run, start, configure, customise, when, tap, bundle, library, proceed };
+module.exports = {
+  run,
+  start,
+  configure,
+  customise,
+  when,
+  tap,
+  bundle,
+  library,
+  proceed,
+  devServer,
+};
