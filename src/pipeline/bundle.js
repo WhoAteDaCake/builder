@@ -1,4 +1,5 @@
 const R = require('ramda');
+const path = require('path');
 const { removeDir } = require('../helpers/files');
 const { runRollup } = require('../helpers/rollup');
 const plugins = require('../helpers/plugins');
@@ -13,6 +14,7 @@ function bundle() {
       output: 'build/index.js',
     })(config.files);
     const output = { file: files.output, format: rollup.format };
+    const outputDir = path.dirname(output.file);
 
     function runAsync() {
       return runRollup(
@@ -25,7 +27,7 @@ function bundle() {
       ).catch(e => debug(e));
     }
     return R.merge(config, {
-      action: action.then(() => removeDir(config.meta.home, files.output)).then(runAsync),
+      action: action.then(() => removeDir(config.meta.home, outputDir)).then(runAsync),
     });
   };
 }

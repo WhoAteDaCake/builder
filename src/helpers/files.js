@@ -32,9 +32,9 @@ function formatPath(base, entry) {
 }
 
 function removeDir(base, dir) {
-  const fullDir = path.dirname(formatPath(base, dir));
+  const fullPath = formatPath(base, dir);
   return new Promise((res, rej) => {
-    fs.remove(fullDir, (err, resp) => (err ? rej(err) : res(resp)));
+    fs.remove(fullPath, (err, resp) => (err ? rej(err) : res(resp)));
   });
 }
 
