@@ -11,19 +11,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
-const getCSSModuleLocalIdent = require('./getCSSModuleLocalIdent');
 // const paths = require('./paths');
 const ManifestPlugin = require('webpack-manifest-plugin');
 
-// Webpack uses `publicPath` to determine where the app is being served from.
-// In development, we always serve from the root. This makes config easier.
 const publicPath = '/';
-// `publicUrl` is just like `publicPath`, but we will provide it to our app
-// as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
-// Omit trailing slash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
 const publicUrl = '';
-// Get environment variables to inject into our app.
-const { env } = process;
 
 // style files regexes
 const cssRegex = /\.css$/;
@@ -67,19 +59,9 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
 // It is focused on developer experience and fast rebuilds.
 // The production configuration is different and lives in a separate file.
 module.exports = config => {
-  /*
-    app ->
-      html -> html file
-      js -> entry file
-      modules -> node modules path
-      output -> app folder
-    */
-  const { babel, env, app } = config;
-  const webpackEnv = Object.entries(env).reduce((dict, [key, value]) => {
-    return { ...dict, [key]: JSON.stringify(value) };
-  }, {});
+  const { babel, env, app, meta, extra } = config;
   return {
-    mode: 'development',
+    mode: env.NODE_ENV,
     // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
     // See the discussion in https://github.com/facebook/create-react-app/issues/343
     devtool: 'cheap-module-source-map',
@@ -99,7 +81,7 @@ module.exports = config => {
       // require.resolve('webpack/hot/dev-server'),
       require.resolve('react-dev-utils/webpackHotDevClient'),
       // Finally, this is your app's code:
-      app.js,
+      app.input,
       // paths.appIndexJs,
       // We include the app code last so that if there is a runtime error during
       // initialization, it doesn't blow up the WebpackDevServer client, and
@@ -138,7 +120,7 @@ module.exports = config => {
       // We placed these paths second because we want `node_modules` to "win"
       // if there are any conflicts. This matches Node resolution mechanism.
       // https://github.com/facebook/create-react-app/issues/253
-      modules: ['node_modules'],
+      modules: [meta.modules],
       // These are the reasonable defaults supported by the Node ecosystem.
       // We also include JSX as a common component filename extension to support
       // some tools, although we do not recommend using it, see:
@@ -217,7 +199,6 @@ module.exports = config => {
               use: getStyleLoaders({
                 importLoaders: 1,
                 modules: true,
-                getLocalIdent: getCSSModuleLocalIdent,
               }),
             },
             // Opt-in support for SASS (using .scss or .sass extensions).
@@ -238,7 +219,6 @@ module.exports = config => {
                 {
                   importLoaders: 2,
                   modules: true,
-                  getLocalIdent: getCSSModuleLocalIdent,
                 },
                 'sass-loader'
               ),
@@ -273,7 +253,7 @@ module.exports = config => {
       new InterpolateHtmlPlugin(env),
       // Makes some environment variables available to the JS code, for example:
       // if (process.env.NODE_ENV === 'development') { ... }. See `./env.js`.
-      new webpack.DefinePlugin(webpackEnv),
+      new webpack.DefinePlugin(extra.env),
       // This is necessary to emit hot updates (currently CSS only):
       new webpack.HotModuleReplacementPlugin(),
       // If you require a missing module and then `npm install` it, you still have

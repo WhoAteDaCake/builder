@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const { PipelineError } = require('../helpers/error');
 
-function meta() {
+function getMeta() {
   return config => {
     const { home } = config.meta;
     const modules = path.join(home, 'node_modules');
@@ -22,4 +22,4 @@ function meta() {
   };
 }
 
-module.exports = meta;
+module.exports = getMeta;

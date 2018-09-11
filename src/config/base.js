@@ -1,8 +1,10 @@
 module.exports = {
-  env: {},
   meta: {
     home: process.cwd(),
   },
   files: require('./files'),
-  rollup: require('./rollup'),
+  build: {
+    rollup: require('./rollup'),
+    babel: require('./babel'),
+  },
 };

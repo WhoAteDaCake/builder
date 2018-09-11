@@ -1,8 +1,10 @@
 const R = require('ramda');
 const webpack = require('webpack');
-const { buildDevServer, buildWebpack } = require('../config/webpack');
+const { setupDevServer, setupWebpack } = require('../helpers/webpack');
+const chalk = require('chalk');
 const WebpackDevServer = require('webpack-dev-server');
 const { createCompiler, prepareUrls } = require('react-dev-utils/WebpackDevServerUtils');
+const getMeta = require('./getMeta');
 
 function handleCompile(err, stats) {
   if (err || stats.hasErrors() || stats.hasWarnings()) {
@@ -12,41 +14,56 @@ function handleCompile(err, stats) {
   }
 }
 
-function devServer(devConfig) {
+const withDefaults = (obj1, obj2) => R.mergeDeepRight(obj1, obj2 || {});
+
+function devServer(config) {
   return config => {
-    const { babel } = config.rollup;
-    const { env, files } = config;
-    const { input, output, html } = R.merge(
+    const { babel, files, meta } = getMeta()(config);
+    const env = withDefaults(
+      { NODE_ENV: 'development', IP: 'localhost', PORT: 8080, PROTOCOL: 'http' },
+      process.env
+    );
+    const extra = withDefaults(
+      {
+        compiler: { env: { NODE_ENV: JSON.stringify(env.NODE_ENV) } },
+        server: {},
+      },
+      config
+    );
+
+    const { input, output, html } = withDefaults(
       { input: 'demo/index.js', output: 'public', html: 'demo/index.html' },
       files
     );
-    const devConf = R.pipe(
-      R.merge({ host: 'localhost', port: 8080, contentBase: output }),
-      buildDevServer
-    )(devConfig);
-
-    const webpackConf = buildWebpack({
+    const devConfig = setupDevServer({
+      host: env.IP,
+      port: env.PORT,
+      contentBase: output,
+      extra: extra.server,
+    });
+    const webpackConf = setupWebpack({
       babel,
       env,
-      app: {
-        js: input,
-        output,
-        html,
-      },
+      meta,
+      app: { input, output, html },
+      exta: extra.compiler,
     });
-    const urls = prepareUrls('http', 'localhost', 8080);
-    const compiler = createCompiler(webpack, webpackConf, 'test', urls, true);
+    const urls = prepareUrls(env.PROTOCOL, env.IP, env.PORT);
+    const compiler = createCompiler(webpack, webpackConf, meta.name, urls, true);
     const devServer = new WebpackDevServer(compiler, devConf);
-    // Launch WebpackDevServer.
-    devServer.listen(8080, 'localhost', err => {
-      if (err) {
-        return console.log(err);
+
+    devServer.listen(env.PORT, env.IP, error => {
+      if (error) {
+        return console.log(error);
       }
-      // if (isInteractive) {
-      //   clearConsole();
-      // }
-      // console.log(chalk.cyan('Starting the development server...\n'));
-      // openBrowser(urls.localUrlForBrowser);
+      console.log(chalk.cyan('Starting the development server...\n'));
+    });
+
+    ['SIGINT', 'SIGTERM'].map(sig => {
+      process.on(sig, () => {
+        devServer.close();
+        process.exit();
+      });
     });
 
     return config;
