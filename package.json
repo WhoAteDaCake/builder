@@ -1,6 +1,6 @@
 {
   "name": "@atecake/builder",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "main": "srs/index.js",
   "repository": "git@github.com:WhoAteDaCake/builder.git",
   "author": "whoatedacake <doitsimplefy@gmail.com>",
