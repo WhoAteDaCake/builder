@@ -7,6 +7,7 @@ const bundle = require('./bundle');
 const library = require('./library');
 const proceed = require('./proceed');
 const devServer = require('./devServer');
+const meta = require('./meta');
 
 module.exports = {
   run,
@@ -19,4 +20,5 @@ module.exports = {
   library,
   proceed,
   devServer,
+  meta,
 };
