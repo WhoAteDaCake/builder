@@ -1,3 +1,5 @@
+const fs = require('fs-extra');
+const path = require('path');
 const R = require('ramda');
 const dirTree = require('directory-tree');
 
@@ -22,4 +24,18 @@ function getFiles(files) {
   return { names: fileList, prefix: files.input };
 }
 
-module.exports = { getFiles };
+function formatPath(base, entry) {
+  if (path.isAbsolute(entry)) {
+    return entry;
+  }
+  return path.join(base, entry);
+}
+
+function removeDir(base, dir) {
+  const fullDir = path.dirname(formatPath(base, dir));
+  return new Promise((res, rej) => {
+    fs.remove(fullDir, (err, resp) => (err ? rej(err) : res(resp)));
+  });
+}
+
+module.exports = { getFiles, formatPath, removeDir };

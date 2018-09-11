@@ -1,4 +1,4 @@
-const setupDevServer = require('./devServer');
-const setupWebpack = require('./main');
+const setupServer = require('./server');
+const setupCompiler = require('./compiler');
 
-module.exports = { setupDevServer, setupWebpack };
+module.exports = { setupServer, setupCompiler };

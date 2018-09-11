@@ -3,11 +3,11 @@ const path = require('path');
 const { runRollup } = require('../helpers/rollup');
 const plugins = require('../helpers/plugins');
 const debug = require('../helpers/debug')('pipeline:library');
-const { getFiles } = require('../helpers/files');
+const { getFiles, removeDir } = require('../helpers/files');
 
 function library() {
   return config => {
-    const { rollup } = config;
+    const { rollup, babel } = config.build;
     const action = R.propOr(Promise.resolve(), 'action', config);
     const files = R.mergeDeepRight({
       input: 'src',
@@ -22,7 +22,7 @@ function library() {
         {
           ...rollup.extra,
           input: name,
-          plugins: plugins(rollup),
+          plugins: plugins(rollup, babel),
         },
         output
       ).catch(e => debug(e));
@@ -32,7 +32,9 @@ function library() {
       const { names, prefix } = getFiles(files);
       return Promise.all(names.map(name => buildFile(name, prefix)));
     }
-    return R.merge(config, { action: action.then(runAsync) });
+    return R.merge(config, {
+      action: action.then(() => removeDir(config.meta.home, files.output)).then(runAsync),
+    });
   };
 }
 

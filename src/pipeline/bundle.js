@@ -1,11 +1,12 @@
 const R = require('ramda');
+const { removeDir } = require('../helpers/files');
 const { runRollup } = require('../helpers/rollup');
 const plugins = require('../helpers/plugins');
 const debug = require('../helpers/debug')('pipeline:bundle');
 
 function bundle() {
   return config => {
-    const { rollup } = config;
+    const { rollup, babel } = config.build;
     const action = R.propOr(Promise.resolve(), 'action', config);
     const files = R.mergeDeepRight({
       input: 'src/index.js',
@@ -18,12 +19,14 @@ function bundle() {
         {
           ...rollup.extra,
           input: files.input,
-          plugins: plugins(rollup),
+          plugins: plugins(rollup, babel),
         },
         output
       ).catch(e => debug(e));
     }
-    return R.merge(config, { action: action.then(runAsync) });
+    return R.merge(config, {
+      action: action.then(() => removeDir(config.meta.home, files.output)).then(runAsync),
+    });
   };
 }
 

@@ -4,14 +4,14 @@ const commonjs = require('rollup-plugin-commonjs');
 const postcss = require('rollup-plugin-postcss');
 const json = require('rollup-plugin-json');
 
-function plugins(build) {
+function plugins(build, babelConfig) {
   return [
     postcss({
       plugins: [],
     }),
     resolve(build.resolve),
     commonjs(build.commonjs),
-    babel(build.babel),
+    babel(babelConfig),
     json(build.json),
   ];
 }
