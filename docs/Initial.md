@@ -2,6 +2,7 @@
 
 ```javascript
 const config = {
+  action: Promise.resolve(),
   meta: {
     home: process.cwd(),
   },

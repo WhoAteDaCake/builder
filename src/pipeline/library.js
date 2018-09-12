@@ -5,8 +5,9 @@ const plugins = require('../helpers/plugins');
 const debug = require('../helpers/debug')('pipeline:library');
 const { getFiles, removeDir } = require('../helpers/files');
 
-function library() {
-  return config => {
+function library(local) {
+  return shared => {
+    const config = R.mergeDeepRight(shared, local);
     const { rollup, babel } = config.build;
     const action = R.propOr(Promise.resolve(), 'action', config);
     const files = R.mergeDeepRight({
