@@ -13,7 +13,8 @@
   },
   "scripts": {
     "examples:all": "cd ./examples && bash run.bash",
-    "examples:select": "cd ./examples && bash custom.bash"
+    "examples:select": "cd ./examples && bash custom.bash",
+    "tag": "node builder.js tag"
   },
   "dependencies": {
     "@babel/core": "^7.0.0",
