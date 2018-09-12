@@ -8,6 +8,7 @@ const library = require('./library');
 const proceed = require('./proceed');
 const devServer = require('./devServer');
 const getMeta = require('./getMeta');
+const { tag } = require('./tag');
 
 module.exports = {
   run,
@@ -21,4 +22,5 @@ module.exports = {
   proceed,
   devServer,
   getMeta,
+  tag,
 };

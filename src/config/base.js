@@ -1,4 +1,5 @@
 module.exports = {
+  argv: process.argv,
   meta: {
     home: process.cwd(),
   },

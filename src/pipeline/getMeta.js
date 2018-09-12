@@ -17,7 +17,7 @@ function getMeta() {
     const pkg = require(pkgPath);
 
     const yarn = fs.existsSync(path.join(home, 'yarn.lock'));
-    const meta = { home, yarn, modules, name: pkg.name || 'No name' };
+    const meta = { home, yarn, modules, name: pkg.name || 'No name', pkg };
     return R.mergeDeepRight({ meta }, config);
   };
 }
