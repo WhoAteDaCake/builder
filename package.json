@@ -1,6 +1,6 @@
 {
   "name": "@atecake/builder",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "src/index.js",
   "repository": "git@github.com:WhoAteDaCake/builder.git",
   "author": "whoatedacake <doitsimplefy@gmail.com>",
@@ -14,7 +14,7 @@
   "scripts": {
     "examples:all": "cd ./examples && bash run.bash",
     "examples:select": "cd ./examples && bash custom.bash",
-    "tag": "node builder.js tag"
+    "builder-tag": "node builder.js tag"
   },
   "dependencies": {
     "@babel/core": "^7.0.0",
