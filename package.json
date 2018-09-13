@@ -14,7 +14,7 @@
   "scripts": {
     "examples:all": "cd ./examples && bash run.bash",
     "examples:select": "cd ./examples && bash custom.bash",
-    "builder-tag": "node builder.js tag"
+    "tag-build": "node builder.js tag"
   },
   "dependencies": {
     "@babel/core": "^7.0.0",
