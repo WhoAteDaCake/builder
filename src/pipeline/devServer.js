@@ -30,7 +30,6 @@ function devServer(initial) {
       },
       initial
     );
-
     const { input, output, html } = R.pipe(
       withDefaults({ input: 'demo/index.js', output: 'public', html: 'demo/index.html' }),
       resolvePaths(meta.home)

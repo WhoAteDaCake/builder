@@ -253,7 +253,7 @@ module.exports = config => {
       new InterpolateHtmlPlugin(env),
       // Makes some environment variables available to the JS code, for example:
       // if (process.env.NODE_ENV === 'development') { ... }. See `./env.js`.
-      new webpack.DefinePlugin(extra.env),
+      new webpack.DefinePlugin({ 'process.env': extra.env }),
       // This is necessary to emit hot updates (currently CSS only):
       new webpack.HotModuleReplacementPlugin(),
       // If you require a missing module and then `npm install` it, you still have
