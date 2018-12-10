@@ -12,7 +12,7 @@
 	"scripts": {
 		"examples:all": "cd ./examples && bash run.bash",
 		"examples:select": "cd ./examples && bash custom.bash",
-		"tag-build": "node builder.js tag"
+		"tag-build": "DEBUG=@atecake/builder:* node builder.js tag"
 	},
 	"dependencies": {
 		"@babel/core": "^7.0.0",
