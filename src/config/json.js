@@ -1,4 +1,4 @@
 // Fixes unexpected token issue
 module.exports = {
-  include: 'node_modules/**',
+	// include: 'node_modules/**',
 };
